@@ -96,4 +96,65 @@ Java 5  to Java 8
                             }
                         }
 
+                        throw
+
+                        throws
+
+                        try{
+                            ..........
+                        }catch(ExceptionType e1){
+                            
+                        }catch(ExceptionType2 e1){
+                            
+                        }catch(ExceptionType3 e1){
+                            
+                        }finally{
+
+                        }
+
+                        try with multicatch 
+                        ---------------------------------
+                        try{
+                            ..........
+                        }catch(ExceptionType | ExceptionType2 | ExceptionType3 e1){
+                            .........................
+                        }finally{
+                            //write close() statements
+                        }
+
+                        try-with-resources
+                        --------------------------------------
+                        try(Connection con = DriverManager.getComnnection(url)) {
+                            ..................
+                        }catch(SQLException exp){
+                            ..............
+                        }
+
+                            try-with-resources can be used on
+                            object os classes that implment Closable.
+================================================================================================
+Interfaces
+            default methods
+            static methods
+
+            Functional Interfaces.
+
+java.time           data and time manipulations 
+
+Lambda Expressions
+Streams API ------------ Functional Programming
+
+java.util           collection are enhanced.
+java.util.function
+java.util.stream 
+java.util.regex
+
+java.io
+java.nio
+
+java.lang           Threads, Concerency API, Thread Pools
+
+java.sql
+
+
 
