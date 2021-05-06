@@ -133,28 +133,162 @@ Java 5  to Java 8
                             try-with-resources can be used on
                             object os classes that implment Closable.
 ================================================================================================
+
 Interfaces
             default methods
             static methods
 
-            Functional Interfaces.
-
 java.time           data and time manipulations 
+--------------------------------------------------------------------
 
-Lambda Expressions
-Streams API ------------ Functional Programming
+
+        LocalDate
+        LocalTime
+        LocalDateTime
+                            Factory Methods
+                            ------------------------
+                            now()
+                            of(...)
+
+        ZonedDateTime
+
+                             Factory Methods
+                            ------------------------
+                            now(ZoneId)
+                            
+
+
+        Period          in months,day....
+        Duration        int day,hours...etc
+
+                        between(start,end)
+
+        DateTiemFormatter
+
+                        ofPattern("");
+
+                        d,dd
+                        M,MM,MMM,MMMM
+                        yy,yyyy
+
+                        h,hh
+                        H,HH
+                        m,mm
+                        s,ss
+                        a
+
+
+Functional Interfaces & Lambda Expressions
+---------------------------------------------------------------------------------------------------
+
+    is any interface that has one and only one abstract method.
+
+    @FunctionalInterface
+    interface Computable {
+        int compute(int x,int y);
+    }
+
+        class Computator implements Computable{
+            @Override
+            public int compute(int a,int b){
+                return x+y;
+            }
+        }
+
+
+        public class LambdaExpressionDemoApp{
+            public static void main(String a[]){
+                Computator cpt = new Computator();
+                System.out.println(cpt.compute(12,22));
+
+                Computable cpt2 = new Computable(){
+                    @Override
+                    public int compute(int a,int b){
+                        return x*y;
+                    }
+                };
+                System.out.println(cpt2.compute(12,22));
+
+                Computable cpt3 = (n1,n2) -> n1>n2?n1:n2 ;
+                System.out.println(cpt3.compute(12,22));
+            }
+        }
+
+Types of FunctionalInterfaces
+----------------------------------------------------------------------------
+
+    Suppliers           that return a value but has no params..
+
+    Consumers           that does not return but has params..
+
+    Predicates          that returns a boolean and may or may not have params....
+
+    Operators           that return a value and accepts params, 
+                        but params and return value must be of the same datatype.
+
+    Functionals         that return a value and accepts params
+
+
+
 
 java.util           collection are enhanced.
 java.util.function
-java.util.stream 
-java.util.regex
 
-java.io
+
+Streams API ------------ Functional Programming
+------------------------------------------------------------------------------------
+java.util.stream    
+
+            stream means a flow of [ water/air /] DATA.
+
+            stream is originated from a source of data (Collection/array)
+
+            Stream s1 = Stream.of(array);
+
+            Stream s2 = list.stream();
+
+            Stream s3 = set.stream();
+
+                    Stream Operators
+                    ---------------------------------
+                        operator        accepts         returns         does
+                        ------------------------------------------------------------------------
+                        forEach         a consumer      nothing         execues the consumer on each ele in the stream
+                        collect         a Collector     a Collections   gather all ele in the stream into a collection
+
+                                            Collectors.toList()
+                                            Collectors.toSet()
+                                            Collectors.toMap()
+
+                        reduce          bianryOperator  java.util       execute the bianryOperator on each pai of ele
+                                                            .Optional       in the stream.
+
+
+                                        Stream s = Stream.of(new int[]{1,2,3,4,5,6});
+                                        s.reduce((x,y) -> x+y);
+                                                                //(((((1+2)+3)+4)+5)+6)
+
+                        map
+                        filter                        
+                        flatMap
+
+
+
+
+java.util.regex
+-------------------------------------------------------------------------------------
+
+
+java.io --------------- IO Streams
 java.nio
+--------------------------------------------------------------------------------------
+
 
 java.lang           Threads, Concerency API, Thread Pools
+--------------------------------------------------------------------------------------
+
 
 java.sql
-
+--------------------------------------------------------------------------------------
 
 
