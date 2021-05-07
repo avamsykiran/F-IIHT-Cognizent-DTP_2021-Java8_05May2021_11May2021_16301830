@@ -11,13 +11,14 @@ import com.cts.jdk8.model.Employee;
 public class EmployeeApp {
 
 	public static void main(String[] args) {
-		List<Employee> emps = Arrays.asList(new Employee(110, "Vamsy", LocalDate.now(), 45000),
-				new Employee(101, "Arun", LocalDate.now().plusMonths(1), 24500),
-				new Employee(107, "Zameer", LocalDate.now().minusMonths(1), 20500),
-				new Employee(103, "Gopi", LocalDate.now().minusMonths(2), 54500),
-				new Employee(104, "Srinu", LocalDate.now().plusMonths(2), 4500),
-				new Employee(105, "Indu", LocalDate.now().plusMonths(3), 4500),
-				new Employee(102, "Sharma", LocalDate.now(), 14500));
+		List<Employee> emps = Arrays.asList(
+				new Employee(110, "Vamsy", LocalDate.now(), 45000, Arrays.asList("Java", "Mysql", "Spring")),
+				new Employee(101, "Arun", LocalDate.now().plusMonths(1), 24500, Arrays.asList("Java", "Mysql")),
+				new Employee(107, "Zameer", LocalDate.now().minusMonths(1), 20500, Arrays.asList("Java", "Spring")),
+				new Employee(103, "Gopi", LocalDate.now().minusMonths(2), 54500, Arrays.asList("Java", "Spring")),
+				new Employee(104, "Srinu", LocalDate.now().plusMonths(2), 4500, Arrays.asList("Angular", "Mongo")),
+				new Employee(105, "Indu", LocalDate.now().plusMonths(3), 4500, Arrays.asList("DevOps")),
+				new Employee(102, "Sharma", LocalDate.now(), 14500, Arrays.asList("Desing", "UML")));
 
 		for (Employee e : emps) {
 			System.out.println(e);

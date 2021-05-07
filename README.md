@@ -251,10 +251,14 @@ java.util.stream
 
                     Stream Operators
                     ---------------------------------
+
+                        Terminal Operators
                         operator        accepts         returns         does
                         ------------------------------------------------------------------------
-                        forEach         a consumer      nothing         execues the consumer on each ele in the stream
-                        collect         a Collector     a Collections   gather all ele in the stream into a collection
+                        forEach         a consumer      nothing         execues the consumer on each 
+                                                                        ele in the stream
+                        collect         a Collector     a Collections   gather all ele in the 
+                                                                        stream into a collection
 
                                             Collectors.toList()
                                             Collectors.toSet()
@@ -267,28 +271,195 @@ java.util.stream
                                         Stream s = Stream.of(new int[]{1,2,3,4,5,6});
                                         s.reduce((x,y) -> x+y);
                                                                 //(((((1+2)+3)+4)+5)+6)
+                        
+                        Intermidiate Operators
+                        operator        accepts         returns         does
+                        ------------------------------------------------------------------------
+                      
+                        map             trasformer      new Stream      the transformer function is applied on
+                                                                        each ele olf the current stream and
+                                                                        the tranformed ele's will be passed
+                                                                        out through the new stream.
 
-                        map
-                        filter                        
-                        flatMap
+                                        Stream s = Stream.of(new int[]{1,2,3,4,5,6});
+                                        Stream s2 =s.map(x -> x*x); //the new stream contians 1,2,9,16,35,36
+                                                      
 
-
-
+                        filter          predicate       new Stream      the predicate has to return              
+                                                                        true for an ele in the current 
+                                                                        stream to be delivered in the new stream.
+                                        
+                                        Stream s = Stream.of(new int[]{1,2,3,4,5,6});
+                                        Stream s2 =s.filter(x->x%3==0) //the new stream contians 3,6
+                                        
+                        flatMap         transformer     new stream      it flattens the nested contianers into
+                                                                         a single container.
 
 java.util.regex
 -------------------------------------------------------------------------------------
 
+        java.lang.String
+                            matches("");
 
-java.io --------------- IO Streams
-java.nio
---------------------------------------------------------------------------------------
+        
+        Pattern
+                    .compile("");
+                    .matcher("");
+
+        Matcher
+                    .matches()
+                    .find()
 
 
 java.lang           Threads, Concerency API, Thread Pools
 --------------------------------------------------------------------------------------
 
+    Threads
+                        Runnable
+                            |       public void run()
+                        Thread
+                                    Thread()
+                                    Thread(String name)
+                                    Thread(Runnable)
+                                    Thread(Runnable,String)
 
-java.sql
+                                    start();
+                                    getName()
+                                    setName(String)
+                                    getPriority();
+                                    setPriority(int); 1 to 10, default is 5.
+
+                                    currentThread(); //static
+                                    sleep(long); //static
+
+                        Thread Life Cycle
+                                Iniation
+                                Queued/Ready
+                                Running/Execution
+                                Paused
+                                Terminated
+   
+                                | new Thread() 
+                                Iniation
+                                |
+                                |start()
+                                |
+                                Queued/Ready ---CPU and other res's are available -- Running
+                                    | wakes up / notify()                                |
+                                Paused <---- sleep()/wait()<-----------------------------|
+                                                                        (job is compelet)|
+                                                                                         |
+                         class Job {                                                   Terminated
+                            public void doSomething(Object object) {
+                                ................
+                                synchronized (object){
+                                    ...
+                                }
+                                .............
+                            }
+
+                            public synchronized void doSomethingElse(){
+                                ..........//the current 'this'
+                            }
+
+                            public synchronized static void staticMethod(){
+
+                            }// Job.class
+                         }
+
+java.io --------------- IO Streams
 --------------------------------------------------------------------------------------
+                    stream is a flow of 'data' from an input or an output device.
+
+            BinaryStreams (data can written or read as 'bytes')
+
+                                java.io.OutputStream
+                    Program -----------> File
+                            -----------> Console
+                            -----------> Another Program on the network ..
+
+                                java.io.InputStream
+                    Program <----------- File
+                            <----------- KB/Mouse
+                            <----------- another Prog on network
+            
+            TextStreams (data can written or read as character/strings)
+
+                               java.io.Writer       java.io.OutputStream
+                    Program ----Text---->    bytes  -----------> File
+                            ----Text---->    bytes  -----------> Console
+                            ----Text---->    bytes  -----------> Another Program on the network ..
+
+                             java.io.Reader    java.io.InputStream
+                    Program <-Text------ bytes <----------- File
+                            <-Text------ bytes <----------- KB/Mouse
+                            <-Text------ bytes <----------- another Prog on network
+
+                    java.io.InputStream
+                                FileInputStream
+                                ObjectInputStream   //deserialization
+                    
+                    java.io.OutputStream
+                                FileOutputStream
+                                ObjkectOutputStream //serialization
+                                PrintStream
+
+                    java.io.Reader
+                                InputStreamReader
+                                BufferedReader
+                                FileReader
+
+                    java.io.Writer
+                                FileWriter
+                    
+                    File
+                    IOException
+                    FileNotFoundException
+
+java.sql                JDBC
+-------------------------------------------------------(JDBC 4)
+
+                    step1           Loading Driver  (Automatic)
+
+                                    Class.forName("fullyQualifiedDriverClassname");
+                                    DriverManager.registerDriver(driverObject);
+
+
+                                    the drive class if is available 
+                                    on the claspath, it is laoded automatically.
+
+                    step2           Opening a connection
+
+                                        try(Connection con = DriverManager.getConnection(dbUrl,uid,pwd)){
+
+                                        }catch(SQLException exp){
+                                            ........................
+                                        }
+
+                    step3
+                            a.     Retrive detaisl about the database
+
+                                            DatabaseMetaData md = con.getMetaData();
+
+                                            md.getDatabaseProductName();
+                                            md.getDriverName();
+
+                            b.     Execute DRl/DML/DDL
+
+                                        Statement st = con.createStatement();
+
+                                        st.execute(ddl);        //true or false is returned.
+                                        st.executeUpdate(dml);  //no of records effected
+                                        st.executeQuery(drl);   //a ResultSet
+
+                                        PreparedStatement st = con.prepareStatement(ddlOrDmlOrDrlQry);
+
+                                        st.execute();        //true or false is returned.
+                                        st.executeUpdate();  //no of records effected
+                                        st.executeQuery();   //a ResultSet
+
+                            c.     Call Proc/.Func 
+
+                                        CallableStatement cb = con.prepareCall(procFunCall);
 
 

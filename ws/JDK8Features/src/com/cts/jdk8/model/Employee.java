@@ -1,6 +1,7 @@
 package com.cts.jdk8.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Employee implements Comparable<Employee>{
 	
@@ -8,17 +9,19 @@ public class Employee implements Comparable<Employee>{
 	private String name;
 	private LocalDate hireDate;
 	private double salary;
+	private List<String> skills;
 
 	public Employee() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Employee(int empId, String name, LocalDate hireDate, double salary) {
+	public Employee(int empId, String name, LocalDate hireDate, double salary,List<String> skills) {
 		super();
 		this.empId = empId;
 		this.name = name;
 		this.hireDate = hireDate;
 		this.salary = salary;
+		this.skills=skills;
 	}
 
 	public int getEmpId() {
@@ -53,6 +56,19 @@ public class Employee implements Comparable<Employee>{
 		this.salary = salary;
 	}
 
+	public List<String> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(List<String> skills) {
+		this.skills = skills;
+	}
+
+	@Override
+	public int compareTo(Employee o) {
+		return this.empId==o.empId?0:this.empId>o.empId?1:-1;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -63,6 +79,7 @@ public class Employee implements Comparable<Employee>{
 		long temp;
 		temp = Double.doubleToLongBits(salary);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((skills == null) ? 0 : skills.hashCode());
 		return result;
 	}
 
@@ -89,19 +106,19 @@ public class Employee implements Comparable<Employee>{
 			return false;
 		if (Double.doubleToLongBits(salary) != Double.doubleToLongBits(other.salary))
 			return false;
+		if (skills == null) {
+			if (other.skills != null)
+				return false;
+		} else if (!skills.equals(other.skills))
+			return false;
 		return true;
 	}
 
 	@Override
-	public int compareTo(Employee o) {
-		return this.empId==o.empId?0:this.empId>o.empId?1:-1;
+	public String toString() {
+		return "Employee [empId=" + empId + ", name=" + name + ", hireDate=" + hireDate + ", salary=" + salary
+				+ ", skills=" + skills + "]";
 	}
 
-	@Override
-	public String toString() {
-		return "Employee [empId=" + empId + ", name=" + name + ", hireDate=" + hireDate + ", salary=" + salary + "]";
-	}
-	
-	
 
 }
